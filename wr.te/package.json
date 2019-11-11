@@ -1,20 +1,36 @@
 {
   "name": "wr.te",
   "version": "0.1.0",
-  "main": "public/Main.js",
   "private": true,
+  "main": "public/electron.js",
+  "author": "Carah Alexander and Samuel Mignot",
+  "homepage": "./",
   "dependencies": {
+    "electron-is-dev": "^1.1.0",
+    "is-primitive": "^3.0.1",
+    "nan": "^2.14.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-scripts": "3.2.0",
-    "electron": "^7.1.1"
+    "react-scripts": "3.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-start": "electron ."
+    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "preelectron-pack": "yarn build",
+    "electron-pack": "electron-builder -c.extraMetadata.main=build/electron.js"
+  },
+  "build": {
+    "appId": "com.example.electron-cra",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -32,6 +48,9 @@
     ]
   },
   "devDependencies": {
-    "electron": "^7.1.1"
+    "concurrently": "^5.0.0",
+    "electron": "^7.1.1",
+    "electron-builder": "^22.1.0",
+    "wait-on": "^3.3.0"
   }
 }
